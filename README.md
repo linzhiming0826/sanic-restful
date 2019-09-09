@@ -13,13 +13,13 @@ After writing Sanic for a long time, I found that there was no framework similar
 
 ## Installation
 ```linux
-pip install sanic-restful
+pip install sanic-restful-api
 ```
 
 ## Simple uses
 ```python
 from sanic import Sanic
-from sanic_restful import reqparse, abort, Api, Resource
+from sanic_restful_api import reqparse, abort, Api, Resource
 
 app = Sanic(__name__)
 api = Api(app)

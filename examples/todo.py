@@ -1,5 +1,5 @@
 from sanic import Sanic
-from sanic_restful import reqparse, abort, Api, Resource
+from sanic_restful_api import reqparse, abort, Api, Resource
 
 app = Sanic(__name__)
 api = Api(app)
