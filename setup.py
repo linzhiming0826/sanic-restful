@@ -42,11 +42,11 @@ setup(
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7'
+        'Programming Language :: Python :: 3.7',
+        'License :: OSI Approved :: MIT License',
     ],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    test_suite='nose.collector',
     install_requires=requirements
 )

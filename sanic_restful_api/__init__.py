@@ -19,7 +19,6 @@ __all__ = ('Api', 'Resource', 'marshal', 'marshal_with',
 def abort(http_status_code, message):
     """Raise a HTTPException for the given http_status_code. Attach a message to the exception for later processing.
     """
-    # noinspection PyUnresolvedReferences
     original_sanic_abort(http_status_code, message)
 
 
@@ -78,11 +77,9 @@ class Api(object):
             api.add_resource(...)
             api.init_app(app)
         """
-        # If app is a blueprint, defer the initialization
         if isinstance(app, Blueprint):
             self.blueprint = app
             self._bp_register = app.register
-            # TODO: register api resource for bp that call add resource function
             app.register = self._sanic_blueprint_register_hook(app)
         elif isinstance(app, Sanic):
             self.register_api(app)
