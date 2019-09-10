@@ -42,16 +42,10 @@ class Api(object):
     :type default_mediatype: str
     :param decorators: Decorators to attach to every resource
     :type decorators: list
-    :param serve_challenge_on_401: Whether to serve a challenge response to
-        clients on receiving 401. This usually leads to a username/password
-        popup in web browers.
     :param url_part_order: A string that controls the order that the pieces
         of the url are concatenated when the full url is constructed.  'b'
         is the blueprint (or blueprint registration) prefix, 'a' is the api
         prefix, and 'e' is the path component the endpoint is added with
-    :param errors: A dictionary to define a custom response for each
-        exception or error raised during a request
-    :type errors: dict
     """
 
     def __init__(self,
@@ -59,18 +53,13 @@ class Api(object):
                  prefix='',
                  default_mediatype="application/json",
                  decorators=None,
-                 serve_challenge_on_401=False,
-                 url_part_order="bae",
-                 errors=None):
+                 url_part_order="bae"):
         self.representations = OrderedDict(DEFAULT_REPRESENTATIONS)
         self.urls = {}
         self.prefix = prefix
         self.default_mediatype = default_mediatype
         self.decorators = decorators if decorators else []
-        self.serve_challenge_on_401 = serve_challenge_on_401
         self.url_part_order = url_part_order
-        self.errors = errors or {}
-        self.blueprint_setup = None
         self.endpoints = set()
         self.resources = []
         self.app = None
@@ -91,7 +80,7 @@ class Api(object):
         """
         # If app is a blueprint, defer the initialization
         if isinstance(app, Blueprint):
-            # self.blueprint = app
+            self.blueprint = app
             self._bp_register = app.register
             # TODO: register api resource for bp that call add resource function
             app.register = self._sanic_blueprint_register_hook(app)
@@ -118,8 +107,7 @@ class Api(object):
         resource_class_args = kwargs.pop("resource_class_args", ())
         resource_class_kwargs = kwargs.pop("resource_class_kwargs", {})
 
-        # Why?
-        # resouce.mediatypes = self.mediatypes
+        resource.mediatypes = self.mediatypes
         resource.endpoint = endpoint
         resource_func = self.output(
             resource.as_view(self, *resource_class_args,

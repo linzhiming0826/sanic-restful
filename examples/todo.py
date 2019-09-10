@@ -1,7 +1,15 @@
+
 from sanic import Sanic
+from sanic.response import text
 from sanic_restful_api import reqparse, abort, Api, Resource
 
+
+async def server_error_handler(request, exception):
+    return text("Oops, server error", status=500)
+
+
 app = Sanic(__name__)
+app.error_handler.add(Exception, server_error_handler)
 api = Api(app)
 
 TODOS = {
@@ -61,4 +69,4 @@ api.add_resource(Todo, '/todos/<string:todo_id>')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=8080)
