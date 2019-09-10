@@ -12,6 +12,8 @@ requirements = [
     'pytz',
 ]
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
 
 version_file = path.join(
     path.dirname(__file__),
@@ -35,6 +37,8 @@ setup(
     author='Gimi Lin',
     author_email='120549827@qq.com',
     description='Simple framework for creating REST APIs',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     classifiers=[
         'Programming Language :: Python :: 3.6',
