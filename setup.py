@@ -10,6 +10,7 @@ requirements = [
     'sanic>=18.2',
     'six>=1.3.0',
     'pytz',
+    'ujson>=1.35'
 ]
 
 with open("README.md", "r") as fh:
@@ -34,7 +35,7 @@ setup(
     version=version,
     license='MIT',
     url='https://github.com/linzhiming0826/sanic-restful',
-    author='Gimi Lin',
+    author='TuoX',
     author_email='120549827@qq.com',
     description='Simple framework for creating REST APIs',
     long_description=long_description,
