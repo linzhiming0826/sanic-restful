@@ -1,7 +1,7 @@
 
 
 
-## Sanic-Restful-Api
+## Sanic-RESTful-Api
 
 ### Simple framework for creating REST APIs
 
