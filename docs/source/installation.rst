@@ -3,7 +3,7 @@
 Installation
 ============
 
-.. currentmodule:: flask_restful
+.. currentmodule:: sanic_restful_api
 
 Install Sanic-RESTful-Api with ``pip`` ::
 
