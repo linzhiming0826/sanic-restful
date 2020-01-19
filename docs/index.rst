@@ -11,4 +11,4 @@ existing ORM/libraries.  Sanic-RESTful-Api encourages best practices with minima
 setup. If you are familiar with Flask, Sanic-RESTful-Api should be easy to pick up.
 (such as `flask_restful <https://github.com/flask-restful/flask-restful>`_)
 
-.. include:: contents.rst.inc
+.. include:: contents.rst
