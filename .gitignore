@@ -52,4 +52,4 @@ var/
 *.egg
 
 # docs
-docs/_build
+docs/build
