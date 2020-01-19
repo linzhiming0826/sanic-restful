@@ -4,8 +4,8 @@ from sanic.request import Request
 from sanic.exceptions import abort as original_sanic_abort
 from sanic.views import HTTPMethodView
 from werkzeug.exceptions import NotAcceptable
-from sanic_restful.utils import unpack, accept_mimetypes
-from sanic_restful.representations.json import output_json
+from sanic_restful_api.utils import unpack, accept_mimetypes
+from sanic_restful_api.representations.json import output_json
 from collections import OrderedDict
 from sanic import Blueprint, Sanic
 from sanic.exceptions import ServerError
@@ -209,8 +209,8 @@ class Api(object):
             self.resources.append((resource, urls, kwargs))
 
     def resource(self, *urls, **kwargs):
-        """Wraps a :class:`~sanic_restful.Resource` class, adding it to the
-        api. Parameters are the same as :meth:`~sanic_restful.Api.add_resource`
+        """Wraps a :class:`~sanic_restful_api.Resource` class, adding it to the
+        api. Parameters are the same as :meth:`~sanic_restful_api.Api.add_resource`
         Example::
             app = Sanic(__name__)
             api = restful.Api(app)
@@ -259,7 +259,7 @@ class Resource(HTTPMethodView):
     the API will return a response with status 405 Method Not Allowed.
     Otherwise the appropriate method is called and passed all arguments
     from the url rule used when adding the resource to an Api instance. See
-    :meth:`~sanic_restful.Api.add_resource` for details.
+    :meth:`~sanic_restful_api.Api.add_resource` for details.
     :param method_decorators: Mapping class; if you need use Sequence,
         use decorators attribute.
         example:
@@ -301,7 +301,7 @@ def marshal(data, fields, envelope=None):
                    response output
     :param envelope: optional key that will be used to envelop the serialized
                      response
-    >>> from sanic_restful import fields, marshal
+    >>> from sanic_restful_api import fields, marshal
     >>> data = { 'a': 100, 'b': 'foo' }
     >>> mfields = { 'a': fields.Raw }
     >>> marshal(data, mfields)
@@ -328,7 +328,7 @@ def marshal(data, fields, envelope=None):
 
 class marshal_with(object):
     """A decorator that apply marshalling to the return values of your methods.
-    >>> from sanic_restful import fields, marshal_with
+    >>> from sanic_restful_api import fields, marshal_with
     >>> mfields = { 'a': fields.Raw }
     >>> @marshal_with(mfields)
     ... def get():
@@ -344,7 +344,7 @@ class marshal_with(object):
     ...
     >>> get()
     OrderedDict([('data', OrderedDict([('a', 100)]))])
-    see :meth:`sanic_restful.marshal`
+    see :meth:`sanic_restful_api.marshal`
     """
 
     def __init__(self, fields, envelope=None):
@@ -377,14 +377,14 @@ class marshal_with_field(object):
     """
     A decorator that formats the return values of your methods
      with a single field.
-    >>> from sanic_restful import marshal_with_field, fields
+    >>> from sanic_restful_api import marshal_with_field, fields
     >>> @marshal_with_field(fields.List(fields.Integer))
     ... def get():
     ...     return ['1', 2, 3.0]
     ...
     >>> get()
     [1, 2, 3]
-    see :meth:`sanic_restful.marshal_with`
+    see :meth:`sanic_restful_api.marshal_with`
     """
 
     def __init__(self, field):

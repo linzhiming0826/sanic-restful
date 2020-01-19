@@ -263,7 +263,7 @@ class Argument(object):
 class RequestParser:
     """Enables adding and parsing of multiple arguments in the context of a
     single request. Ex::
-        from sanic_restful import reqparse
+        from sanic_restful_api import reqparse
         parser = reqparse.RequestParser()
         parser.add_argument('foo')
         parser.add_argument('int_bar', type=int)

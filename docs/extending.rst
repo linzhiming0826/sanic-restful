@@ -221,16 +221,16 @@ Error handling is a tricky problem. Your Sanic application may be wearing
 multiple hats, yet you want to handle all Sanic-RESTful-Api errors with the correct
 content type and error syntax as your 200-level requests.
 
-Sanic-RESTful will call the :meth:`~sanic_restful_api.Api.handle_error`
-function on any 400 or 500 error that happens on a Sanic-RESTful route, and
+Sanic-RESTful-Api will call the :meth:`~sanic_restful_api.Api.handle_error`
+function on any 400 or 500 error that happens on a Sanic-RESTful-Api route, and
 leave other routes alone. You may want your app to return an error message with
 the correct media type on 404 Not Found errors; in which case, use the
-`catch_all_404s` parameter of the :class:`~sanic_restful.Api` constructor. ::
+`catch_all_404s` parameter of the :class:`~sanic_restful_api.Api` constructor. ::
 
     app = Sanic(__name__)
     api = sanic_restful_api.Api(app, catch_all_404s=True)
 
-Then Sanic-RESTful will handle 404s in addition to errors on its own routes.
+Then Sanic-RESTful-Api will handle 404s in addition to errors on its own routes.
 
 Sometimes you want to do something special when an error occurs - log to a
 file, send an email, etc. Use the :meth:`~sanic.got_request_exception` method
@@ -266,7 +266,7 @@ Including the `'status'` key will set the Response's status code. If not
 specified it will default to 500.
 
 Once your ``errors`` dictionary is defined, simply pass it to the
-:class:`~sanic_restful.Api` constructor. ::
+:class:`~sanic_restful_api.Api` constructor. ::
 
     app = Sanic(__name__)
     api = sanic_restful_api.Api(app, errors=errors)

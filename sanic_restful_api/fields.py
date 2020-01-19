@@ -3,7 +3,7 @@ from calendar import timegm
 from decimal import Decimal as MyDecimal, ROUND_HALF_EVEN
 from email.utils import formatdate
 import six
-from sanic_restful import marshal
+from sanic_restful_api import marshal
 
 __all__ = ["String", "FormattedString", "DateTime", "Float",
            "Integer", "Arbitrary", "Nested", "List", "Raw", "Boolean",
@@ -162,7 +162,7 @@ class List(Raw):
     def __init__(self, cls_or_instance, **kwargs):
         super(List, self).__init__(**kwargs)
         error_msg = ("The type of the list elements must be a subclass of "
-                     "sanic_restful.fields.Raw")
+                     "sanic_restful_api.fields.Raw")
         if isinstance(cls_or_instance, type):
             if not issubclass(cls_or_instance, Raw):
                 raise MarshallingException(error_msg)
