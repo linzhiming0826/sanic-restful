@@ -24,7 +24,7 @@ on the :class:`~Api` object. ::
     api = Api(app)
 
     @api.representation('application/json')
-    def output_json(data, code, headers=None):
+    async def output_json(data, code, headers=None):
         resp = make_response(json.dumps(data), code)
         resp.headers.extend(headers or {})
         return resp
@@ -133,7 +133,7 @@ API. ::
     api = Api(app)
 
     @api.representation('text/csv')
-    def output_csv(data, code, headers=None):
+    async def output_csv(data, code, headers=None):
         pass
         # implement csv output!
 
@@ -203,10 +203,10 @@ and the decorators will only apply to matching requests.
     class MyResource(restful.Resource):
         method_decorators = {'get': [cache]}
 
-         def get(self, *args, **kwargs):
+        async def get(self, *args, **kwargs):
             return something_interesting(*args, **kwargs)
 
-         def post(self, *args, **kwargs):
+        async def post(self, *args, **kwargs):
             return create_something(*args, **kwargs)
 
 In this case, the caching decorator would only apply to the `GET` request and not

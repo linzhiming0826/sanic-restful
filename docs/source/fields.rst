@@ -34,7 +34,7 @@ formatted as an RFC 822 date string (ISO 8601 is supported as well) ::
 
     class Todo(Resource):
         @marshal_with(resource_fields, envelope='resource')
-        def get(self, **kwargs):
+        async def get(self, **kwargs):
             return db_get_todo()  # Some function that queries the db
 
 
@@ -54,7 +54,7 @@ dicts, or lists of objects.
     equivalent to ::
 
         class Todo(Resource):
-            def get(self, **kwargs):
+            async def get(self, **kwargs):
                 return marshal(db_get_todo(), resource_fields), 200
 
 This explicit expression can be used to return HTTP status codes other than 200

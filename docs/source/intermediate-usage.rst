@@ -45,9 +45,9 @@ In the resource files, you just have your resource objects. So here's what
     from sanic_restful_api import Resource
 
     class Foo(Resource):
-        def get(self):
+        async def get(self):
             pass
-        def post(self):
+        async def post(self):
             pass
 
 The key to this setup lies in ``app.py``: ::
@@ -89,7 +89,7 @@ up to a :class:`~sanic.Blueprint`. ::
     api = Api(api_bp)
 
     class TodoItem(Resource):
-        def get(self, id):
+        async def get(self, id):
             return {'task': 'Say "Hello, World!"'}
 
     api.add_resource(TodoItem, '/todos/<int:id>')
@@ -151,13 +151,13 @@ exercise a larger amount of options. We'll define a resource named "User". ::
     class User(Resource):
 
         @marshal_with(user_fields)
-        def post(self):
+        async def post(self):
             args = post_parser.parse_args()
             user = create_user(args.username, args.email, args.user_priority)
             return user
 
         @marshal_with(user_fields)
-        def get(self, id):
+        async def get(self, id):
             args = post_parser.parse_args()
             user = fetch_user(id)
             return user

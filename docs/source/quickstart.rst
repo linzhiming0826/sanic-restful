@@ -22,7 +22,7 @@ A minimal Sanic-RESTful-Api API looks like this: ::
     api = Api(app)
 
     class HelloWorld(Resource):
-        def get(self):
+        async def get(self):
             return {'hello': 'world'}
 
     api.add_resource(HelloWorld, '/')
@@ -62,10 +62,10 @@ like this: ::
     todos = {}
 
     class TodoSimple(Resource):
-        def get(self, todo_id):
+        async def get(self, todo_id):
             return {todo_id: todos[todo_id]}
 
-        def put(self, todo_id):
+        async def put(self, todo_id):
             todos[todo_id] = request.form['data']
             return {todo_id: todos[todo_id]}
 
@@ -105,17 +105,17 @@ setting the response code and response headers using multiple return values,
 as shown below: ::
 
     class Todo1(Resource):
-        def get(self):
+        async def get(self):
             # Default to 200 OK
             return {'task': 'Hello world'}
 
     class Todo2(Resource):
-        def get(self):
+        async def get(self):
             # Set the response code to 201
             return {'task': 'Hello world'}, 201
 
     class Todo3(Resource):
-        def get(self):
+        async def get(self):
             # Set the response code to 201 and return custom headers
             return {'task': 'Hello world'}, 201, {'Etag': 'some-opaque-string'}
 
@@ -199,7 +199,7 @@ use the ``fields`` module to describe the structure of your response. ::
 
     class Todo(Resource):
         @marshal_with(resource_fields)
-        def get(self, **kwargs):
+        async def get(self, **kwargs):
             return TodoDao(todo_id='my_todo', task='Remember the milk')
 
 The above example takes a python object and prepares it to be serialized. The
@@ -239,16 +239,16 @@ Save this example in api.py ::
     # Todo
     # shows a single todo item and lets you delete a todo item
     class Todo(Resource):
-        def get(self, todo_id):
+        async def get(self, todo_id):
             abort_if_todo_doesnt_exist(todo_id)
             return TODOS[todo_id]
 
-        def delete(self, todo_id):
+        async def delete(self, todo_id):
             abort_if_todo_doesnt_exist(todo_id)
             del TODOS[todo_id]
             return '', 204
 
-        def put(self, todo_id):
+        async def put(self, todo_id):
             args = parser.parse_args()
             task = {'task': args['task']}
             TODOS[todo_id] = task
@@ -258,10 +258,10 @@ Save this example in api.py ::
     # TodoList
     # shows a list of all todos, and lets you POST to add new tasks
     class TodoList(Resource):
-        def get(self):
+        async def get(self):
             return TODOS
 
-        def post(self):
+        async def post(self):
             args = parser.parse_args()
             todo_id = int(max(TODOS.keys()).lstrip('todo')) + 1
             todo_id = 'todo%i' % todo_id
