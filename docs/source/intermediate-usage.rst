@@ -265,7 +265,7 @@ So you could have a :class:`Resource`: ::
             # smart_engine is a black box dependency
             self.smart_engine = kwargs['smart_engine']
 
-        def get(self):
+        async def get(self):
             return self.smart_engine.next_todo()
 
 You can inject the required dependency into TodoNext like so: ::
