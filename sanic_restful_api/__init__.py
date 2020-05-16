@@ -11,12 +11,16 @@ from sanic import Blueprint, Sanic
 from sanic.exceptions import ServerError
 from sanic.response import BaseHTTPResponse, text
 from werkzeug.http import parse_accept_header
+try:
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
 
 __all__ = ('Api', 'Resource', 'marshal', 'marshal_with',
            'marshal_with_field', 'abort')
 
 
-def abort(http_status_code, message):
+def abort(http_status_code, message=None):
     """Raise a HTTPException for the given http_status_code. Attach a message to the exception for later processing.
     """
     original_sanic_abort(http_status_code, message)
@@ -267,17 +271,24 @@ class Resource(HTTPMethodView):
             method_decoratros = {'get': [permission, login_require]}
     """
     representations = None
-    method_decorators = {}
+    method_decorators = []
 
     def __init__(self, request: Request, *args, **kwargs):
         self.request = request
 
     async def dispatch_request(self, request: Request, *args, **kwargs):
         meth = getattr(self, request.method.lower(), None)
+        if meth is None and request.method == 'HEAD':
+            meth = getattr(self, 'get', None)
+        assert meth is not None, 'Unimplemented method %r' % request.method
 
-        if self.method_decorators:
-            for decorator in self.method_decorators.get(request.method.lower(), []):
-                meth = decorator(meth)
+        if isinstance(self.method_decorators, Mapping):
+            decorators = self.method_decorators.get(request.method.lower(), [])
+        else:
+            decorators = self.method_decorators
+
+        for decorator in decorators:
+            meth = decorator(meth)
 
         resp = await meth(request, *args, **kwargs)
         if isinstance(resp, BaseHTTPResponse):
