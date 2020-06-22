@@ -9,7 +9,7 @@ def output_json(app, data, code, headers=None):
     dumped = dumps(data, **settings) + "\n"
     resp = HTTPResponse(
         dumped,
-        status=200,
+        status=code,
         content_type="application/json",
     )
     resp.headers.extend(headers or {})
