@@ -11,6 +11,7 @@ requirements = [
     'six>=1.3.0',
     'pytz',
     'ujson>=1.35'
+    'werkzeug'
 ]
 
 with open("README.md", "r") as fh:
