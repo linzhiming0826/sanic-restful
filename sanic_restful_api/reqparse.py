@@ -208,7 +208,7 @@ class Argument(object):
                     except Exception as error:
                         if self.ignore:
                             continue
-                        self.handle_validation_error(
+                        return self.handle_validation_error(
                             request.app, error, bundle_errors)
 
                     if self.choices and value not in self.choices:
