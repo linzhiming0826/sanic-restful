@@ -1,5 +1,5 @@
 from sanic.response import HTTPResponse
-from ujson import dumps
+from json import dumps
 
 
 def output_json(app, data, code, headers=None):
