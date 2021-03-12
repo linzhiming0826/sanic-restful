@@ -81,7 +81,7 @@ class TodoList(Resource):
 # Actually setup the Api resource routing here
 ##
 api.add_resource(TodoList, '/todos')
-api.add_resource(Todo, '/todos/<string:todo_id>')
+api.add_resource(Todo, '/todos/<todo_id:string>')
 
 
 if __name__ == '__main__':
