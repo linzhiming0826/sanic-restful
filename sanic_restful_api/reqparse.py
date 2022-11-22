@@ -1,4 +1,8 @@
 import collections
+try:
+    from collections import MutableSequence
+except:
+    from collections.abc import MutableSequence
 from copy import deepcopy
 import decimal
 try:
@@ -192,7 +196,7 @@ class Argument(object):
                     values = source.getlist(name)
                 else:
                     values = source.get(name)
-                    if not (isinstance(values, collections.MutableSequence)
+                    if not (isinstance(values, MutableSequence)
                             and self.action == 'append'):
                         values = [values]
 
