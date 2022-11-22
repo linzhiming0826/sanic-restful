@@ -1,8 +1,11 @@
 import collections
 from copy import deepcopy
 import decimal
-
-from sanic.exceptions import abort, InvalidUsage
+try:
+    from sanic.exceptions import abort
+except Exception:
+    from sanic.exceptions import SanicException as abort
+from sanic.exceptions import InvalidUsage
 from sanic.request import Request, RequestParameters
 
 
@@ -163,7 +166,7 @@ class Argument(object):
 
         if app.config.get("BUNDLE_ERRORS", False) or bundle_errors:
             return error, msg
-        abort(400, message=msg)
+        abort(status_code=400, message=msg)
 
     def parse(self, request, req_temp, bundle_errors=False):
         """Parses argument value(s) from the request, converting according to
@@ -331,11 +334,11 @@ class RequestParser:
                 namespace[arg.dest or name] = value
 
         if errors:
-            abort(400, message=errors)
+            abort(status_code=400, message=errors)
 
         if strict and req_temp.unparsed_arguments:
             abort(
-                400, 'Unknown arguments: %s' % ', '.join(
+                status_code=400, message='Unknown arguments: %s' % ', '.join(
                     req_temp.unparsed_arguments.keys()))
 
         return namespace
