@@ -87,7 +87,7 @@ class Api(object):
         if isinstance(app, Blueprint):
             self.blueprint = app
             self._bp_register = app.register
-            app.register = self._sanic_blueprint_register_hook(app)
+            app.ctx.register = self._sanic_blueprint_register_hook(app)
         elif isinstance(app, Sanic):
             self.register_api(app)
         else:

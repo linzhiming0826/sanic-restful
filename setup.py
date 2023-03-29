@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 requirements = [
     'aniso8601>=0.82',
-    'sanic>=18.2',
+    'sanic>=22.12.0',
     'six>=1.3.0',
     'pytz',
     'werkzeug'
