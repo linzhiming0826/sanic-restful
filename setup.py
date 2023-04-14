@@ -9,6 +9,7 @@ requirements = [
     'aniso8601>=0.82',
     'sanic>=22.12.0',
     'six>=1.3.0',
+    'orjson>=3.8.0'
     'pytz',
     'werkzeug'
 ]

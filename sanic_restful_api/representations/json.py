@@ -1,12 +1,9 @@
+import orjson
 from sanic.response import HTTPResponse
-from json import dumps
 
 
 def output_json(app, data, code, headers=None):
-    settings = app.config.get('RESTFUL_JSON', {})
-    if app.debug:
-        settings.setdefault('indent', 4)
-    dumped = dumps(data, **settings) + "\n"
+    dumped = orjson.dumps(data, option=orjson.OPT_APPEND_NEWLINE)
     resp = HTTPResponse(
         dumped,
         status=code,
