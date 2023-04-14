@@ -32,31 +32,6 @@ on the :class:`~Api` object. ::
 These representation functions must return a Sanic :class:`~sanic.Response`
 object.
 
-.. Note ::
-
-    Sanic-RESTful-Api uses the :mod:`json` module from the Python standard library
-    instead of :mod:`sanic.json` because the Sanic JSON serializer includes
-    serialization capabilities which are not in the JSON spec. If your
-    application needs these customizations, you can replace the default JSON
-    representation with one using the Sanic JSON module as described above.
-
-It is possible to configure how the default Sanic-RESTful-Api JSON representation
-will format JSON by providing a ``RESTFUL_JSON`` attribute on the application
-configuration. This setting is a dictionary with keys that correspond to the
-keyword arguments of :py:func:`json.dumps`. ::
-
-    class MyConfig(object):
-        RESTFUL_JSON = {'separators': (', ', ': '),
-                        'indent': 2,
-                        'cls': MyCustomEncoder}
-
-.. Note ::
-
-    If the application is running in debug mode (``app.debug = True``) and
-    either ``sort_keys`` or ``indent`` are not declared in the ``RESTFUL_JSON``
-    configuration setting, Sanic-RESTful will provide defaults of ``True`` and
-    ``4`` respectively.
-
 Custom Fields & Inputs
 ----------------------
 
