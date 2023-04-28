@@ -1,7 +1,7 @@
 import collections
 try:
     from collections import MutableSequence
-except:
+except Exception:
     from collections.abc import MutableSequence
 from copy import deepcopy
 import decimal
@@ -11,6 +11,7 @@ except Exception:
     from sanic.exceptions import SanicException as abort
 from sanic.exceptions import InvalidUsage
 from sanic.request import Request, RequestParameters
+from sanic.compat import Header
 
 
 class Namespace(collections.UserDict):
@@ -192,7 +193,7 @@ class Argument(object):
             name = self.name + operator.replace("=", "", 1)
             if name in source:
                 # Account for MultiDict and regular dict
-                if hasattr(source, "getlist"):
+                if hasattr(source, "getlist") and not isinstance(source, Header):
                     values = source.getlist(name)
                 else:
                     values = source.get(name)
