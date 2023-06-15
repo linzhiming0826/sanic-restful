@@ -3,7 +3,9 @@ from sanic.response import HTTPResponse
 
 
 def output_json(app, data, code, headers=None):
-    dumped = orjson.dumps(data, option=orjson.OPT_APPEND_NEWLINE)
+    settings = app.config.get(
+        'RESTFUL_JSON', orjson.OPT_APPEND_NEWLINE | orjson.OPT_NON_STR_KEYS)
+    dumped = orjson.dumps(data, option=settings)
     resp = HTTPResponse(
         dumped,
         status=code,
