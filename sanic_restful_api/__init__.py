@@ -1,4 +1,5 @@
 from __future__ import absolute_import
+from typing import Type
 from functools import wraps
 from sanic.request import Request
 from sanic.exceptions import SanicException as original_sanic_abort
@@ -182,7 +183,7 @@ class Api(object):
         parts = {'b': registration_prefix, 'a': self.prefix, 'e': url_part}
         return ''.join(parts[key] for key in self.url_part_order if parts[key])
 
-    def add_resource(self, resource, *urls, **kwargs):
+    def add_resource(self, resource: Type['Resource'], *urls, **kwargs):
         """Adds a resource to the api.
         :param resource: the class name of your resource
         :type resource: :class:`Resource`
