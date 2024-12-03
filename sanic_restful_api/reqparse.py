@@ -1,4 +1,6 @@
 import collections
+import enum
+
 try:
     from collections import MutableSequence
 except Exception:
@@ -149,10 +151,12 @@ class Argument(object):
             if not self.type:
                 return value
             return self.type(value, self.name, op)
-        except TypeError:
+        except (TypeError, ValueError):
             try:
                 if self.type is decimal.Decimal:
                     return self.type(str(value), self.name)
+                elif isinstance(self.type, enum.Enum) or issubclass(self.type, enum.Enum):
+                    return self.type(value)
                 else:
                     return self.type(value, self.name)
             except TypeError:
