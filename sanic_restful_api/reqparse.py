@@ -8,7 +8,10 @@ import decimal
 try:
     from sanic.exceptions import abort
 except Exception:
-    from sanic.exceptions import SanicException as abort
+    from sanic.exceptions import SanicException
+
+    def abort(status_code=400, message="Bad Request"):
+        raise SanicException(message, status_code=status_code)
 from sanic.exceptions import InvalidUsage
 from sanic.request import Request, RequestParameters
 from sanic.compat import Header
